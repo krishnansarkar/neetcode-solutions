@@ -16,40 +16,40 @@
 // s and t consist of lowercase English letters.
 
 class Solution {
-  /**
-   * @param {string} s
-   * @param {string} t
-   * @return {boolean}
-   */
-  isAnagram(s, t) {
-    var sLetterCounts = this.#getLetterCountsOfString(s);
-    var tLetterCounts = this.#getLetterCountsOfString(t);
+    /**
+     * @param {string} s
+     * @param {string} t
+     * @return {boolean}
+     */
+    isAnagram(s, t) {
+        var sLetterCounts = this.#getLetterCountsOfString(s);
+        var tLetterCounts = this.#getLetterCountsOfString(t);
 
-    if (sLetterCounts.size != tLetterCounts.size) return false;
+        if (sLetterCounts.size != tLetterCounts.size) return false;
 
-    for (const [key, value] of sLetterCounts) {
-      if (!tLetterCounts.has(key)) return false;
-      if (value != tLetterCounts.get(key)) return false;
+        for (const [key, value] of sLetterCounts) {
+            if (!tLetterCounts.has(key)) return false;
+            if (value != tLetterCounts.get(key)) return false;
+        }
+
+        return true;
     }
 
-    return true;
-  }
-
-  /**
-   * @param {string} s
-   * @return {Map}
-   */
-  #getLetterCountsOfString(s) {
-    var letterCounts = new Map();
-    for (const char of s) {
-      if (letterCounts.has(char)) {
-        letterCounts.set(char, letterCounts.get(char) + 1);
-      } else {
-        letterCounts.set(char, 1);
-      }
+    /**
+     * @param {string} s
+     * @return {Map}
+     */
+    #getLetterCountsOfString(s) {
+        var letterCounts = new Map();
+        for (const char of s) {
+            if (letterCounts.has(char)) {
+                letterCounts.set(char, letterCounts.get(char) + 1);
+            } else {
+                letterCounts.set(char, 1);
+            }
+        }
+        return letterCounts;
     }
-    return letterCounts;
-  }
 }
 
 // Time complexity: O(n + m)
