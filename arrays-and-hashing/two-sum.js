@@ -24,26 +24,29 @@
 // -10,000,000 <= target <= 10,000,000
 
 class Solution {
-  /**
-   * @param {number[]} nums
-   * @param {number} target
-   * @return {number[]}
-   */
-  twoSum(nums, target) {
-    var numToIndexMap = new Map();
+    /**
+     * @param {number[]} nums
+     * @param {number} target
+     * @return {number[]}
+     */
+    twoSum(nums, target) {
+        var numToIndexMap = new Map();
 
-    for (let i = 0; i < nums.length; i++) {
-      numToIndexMap.set(nums[i], i);
+        for (let i = 0; i < nums.length; i++) {
+            numToIndexMap.set(nums[i], i);
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+            let requiredNum = target - nums[i];
+            if (numToIndexMap.has(requiredNum)) {
+                var ii = numToIndexMap.get(requiredNum);
+                if (i != ii) return [i, ii];
+            }
+        }
+
+        return [-1, -1];
     }
-
-    for (let i = 0; i < nums.length; i++) {
-      let requiredNum = target - nums[i];
-      if (numToIndexMap.has(requiredNum)) {
-        var ii = numToIndexMap.get(requiredNum);
-        if (i != ii) return [i, ii];
-      }
-    }
-
-    return [-1, -1];
-  }
 }
+
+// Time-complexity: O(n)
+// Space-complexity: O(n)
