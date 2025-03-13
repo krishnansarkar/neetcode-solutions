@@ -17,43 +17,43 @@
 // -1000 <= nums[i] <= 1000
 // 1 <= k <= number of distinct elements in nums.
 
-// class Solution {
-//     /**
-//      * @param {number[]} nums
-//      * @param {number} k
-//      * @return {number[]}
-//      */
-//     topKFrequent(nums, k) {
-//         var numCounts = new Map();
+class ArraySortSolution {
+    /**
+     * @param {number[]} nums
+     * @param {number} k
+     * @return {number[]}
+     */
+    topKFrequent(nums, k) {
+        var numCounts = new Map();
 
-//         for (const num of nums) {
-//             if (numCounts.has(num)) numCounts.set(num, numCounts.get(num) + 1);
-//             else numCounts.set(num, 1);
-//         }
+        for (const num of nums) {
+            if (numCounts.has(num)) numCounts.set(num, numCounts.get(num) + 1);
+            else numCounts.set(num, 1);
+        }
 
-//         var numCountsArray = [];
-//         for (const [key, value] of numCounts) {
-//             numCountsArray.push([key, value]);
-//         }
-//         numCountsArray.sort((a, b) => {
-//             if (a[1] > b[1]) return -1;
-//             if (a[1] < b[1]) return 1;
-//             return 0;
-//         });
+        var numCountsArray = [];
+        for (const [key, value] of numCounts) {
+            numCountsArray.push([key, value]);
+        }
+        numCountsArray.sort((a, b) => {
+            if (a[1] > b[1]) return -1;
+            if (a[1] < b[1]) return 1;
+            return 0;
+        });
 
-//         var result = [];
-//         for (let i = 0; i < k; i++) {
-//             result.push(numCountsArray[i][0]);
-//         }
+        var result = [];
+        for (let i = 0; i < k; i++) {
+            result.push(numCountsArray[i][0]);
+        }
 
-//         return result;
-//     }
-// }
+        return result;
+    }
+}
 
 // Time-complexity: O(n log n)
 // Space-complexity: O(n)
 
-class Solution {
+class BucketSortSolution {
     /**
      * @param {number[]} nums
      * @param {number} k
@@ -73,9 +73,7 @@ class Solution {
 
         var result = [];
         for (let i = frequencyBucket.length - 1; i >= 0; i--) {
-            // console.log(frequencyBucket[i]);
             for (const n of frequencyBucket[i]) {
-                // console.log(`--${n}\n`);
                 result.push(n);
                 if (result.length == k) return result;
             }
@@ -83,5 +81,8 @@ class Solution {
     }
 }
 
-var solution = new Solution();
-console.log(solution.topKFrequent([1], 1));
+//var solution = new BucketSortSolution();
+//console.log(solution.topKFrequent([1], 1));
+
+// Time-complexity: O(n)
+// Space-complexity: O(n)
