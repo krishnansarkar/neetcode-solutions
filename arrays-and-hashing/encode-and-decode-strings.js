@@ -4,14 +4,19 @@ class Solution {
      * @returns {string}
      */
     encode(strs) {
-        var partA = "";
-        var partB = "";
+        var partAArray = [];
         for (const str of strs) {
-            partA += str.length + ",";
-            partB += str;
+            partAArray.push(str.length);
+            partAArray.push(",");
         }
+        var partB = strs.join("");
 
-        return strs.length + "!" + partA + partB;
+        var result = [];
+        result.push(strs.length);
+        result.push("!");
+        result.push(partAArray.join(""));
+        result.push(partB);
+        return result.join("");
     }
 
     /**
@@ -21,44 +26,44 @@ class Solution {
     decode(str) {
         let i = 0;
         var lengths = [];
-        var substr = "";
+        var substrArray = [];
         while (str[i] != "!") {
-            substr += str[i];
+            substrArray.push(str[i]);
             i++;
         }
-        var stringCount = parseInt(substr);
+        var stringCount = parseInt(substrArray.join(""));
         while (lengths.length < stringCount) {
             i++;
-            substr = "";
+            substrArray = [];
             while (str[i] != ",") {
-                substr += str[i];
+                substrArray.push(str[i]);
                 i++;
             }
-            lengths.push(parseInt(substr));
+            lengths.push(parseInt(substrArray.join("")));
         }
 
         var result = [];
         i++;
         let lengthIndex = 0;
         while (lengthIndex < lengths.length) {
-            substr = "";
+            substrArray = [];
             let charIndex = 0;
             while (charIndex < lengths[lengthIndex]) {
-                substr += str[i];
+                substrArray.push(str[i]);
                 i++;
                 charIndex++;
             }
-            result.push(substr);
+            result.push(substrArray.join(""));
             lengthIndex++;
         }
         return result;
     }
 }
 
-// var solution = new Solution();
-// var encodedMessage = solution.encode(["neet", "code", "love", "you"]);
-// console.log(encodedMessage);
-// console.log(solution.decode(encodedMessage));
+var solution = new Solution();
+var encodedMessage = solution.encode(["neet", "code", "love", "you"]);
+console.log(encodedMessage);
+console.log(solution.decode(encodedMessage));
 
 // Time-complexity: O(n)
 // Space-complexity: O(n)
