@@ -18,7 +18,7 @@
 // 2 <= nums.length <= 1000
 // -20 <= nums[i] <= 20
 
-class Solution {
+class DivisionSolution {
     /**
      * @param {number[]} nums
      * @return {number[]}
@@ -63,7 +63,38 @@ class Solution {
     }
 }
 
-// var solution = new Solution();
+// var solution = new DivisionSolution();
+// console.log(solution.productExceptSelf([1, 2, 4, 6]));
+// console.log(solution.productExceptSelf([-1, 0, 1, 2, 3]));
+// console.log(solution.productExceptSelf([-1, 0, 1, 0, 3]));
+
+// Time-complexity: O(n)
+// Space-complexity: O(n)
+
+class DivisionlessSolution {
+    /**
+     * @param {number[]} nums
+     * @return {number[]}
+     */
+    productExceptSelf(nums) {
+        var prefixProducts = [];
+        let product = 1;
+        prefixProducts.push(product);
+        for (let i = 0; i < nums.length - 1; i++) {
+            product *= nums[i];
+            prefixProducts.push(product);
+        }
+        var result = Array.from({ length: nums.length }, () => 0);
+        var postfixProduct = 1;
+        for (let i = nums.length - 1; i >= 0; i--) {
+            result[i] = prefixProducts[i] * postfixProduct;
+            postfixProduct *= nums[i];
+        }
+        return result;
+    }
+}
+
+// var solution = new DivisionlessSolution();
 // console.log(solution.productExceptSelf([1, 2, 4, 6]));
 // console.log(solution.productExceptSelf([-1, 0, 1, 2, 3]));
 // console.log(solution.productExceptSelf([-1, 0, 1, 0, 3]));
