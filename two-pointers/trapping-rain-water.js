@@ -17,58 +17,43 @@ class Solution {
      * @return {number}
      */
     trap(height) {
-        var frontIndex = 0;
-        var backIndex = height.length - 1;
-        var result = 0;
-        let indexi = Array.from({ length: height.length }, (_, i) => i);
-        while (frontIndex < backIndex) {
-            console.log(`[${indexi}]`);
-            console.log(`[${height}]`);
-            {
-                while (height[frontIndex] <= height[frontIndex + 1])
-                    frontIndex++;
-                let p = frontIndex + 1;
-                let tentativeCapacity = 0;
-                while (height[frontIndex] > height[p] && p < backIndex) {
-                    tentativeCapacity += height[frontIndex] - height[p];
-                    p++;
-                }
-                if (
-                    p < backIndex ||
-                    (p == backIndex && height[frontIndex] < height[backIndex])
-                ) {
-                    result += tentativeCapacity;
-                    frontIndex = p;
-                }
-                console.log(`[${frontIndex},${p},${tentativeCapacity}]`);
-            }
-            {
-                while (height[backIndex] <= height[backIndex - 1]) backIndex--;
-                let p = backIndex - 1;
-                let tentativeCapacity = 0;
-                while (height[backIndex] > height[p] && p > frontIndex) {
-                    tentativeCapacity += height[backIndex] - height[p];
-                    p--;
-                }
-                if (p >= frontIndex) result += tentativeCapacity;
-                console.log(`[${backIndex},${p},${tentativeCapacity}]`);
-                backIndex = p;
-            }
+        var leftMaxes = new Array(height.length).fill(0);
+        var rightMaxes = new Array(height.length).fill(0);
 
-            console.log("---");
+        leftMaxes[0] = height[0];
+        for (let i = 1; i < height.length; i++) {
+            leftMaxes[i] = Math.max(leftMaxes[i - 1], height[i]);
         }
+
+        rightMaxes[height.length - 1] = height[height.length - 1];
+        for (let i = height.length - 2; i >= 0; i--) {
+            rightMaxes[i] = Math.max(rightMaxes[i + 1], height[i]);
+        }
+
+        let result = 0;
+        for (let i = 0; i < height.length; i++) {
+            result += Math.max(
+                0,
+                Math.min(leftMaxes[i], rightMaxes[i]) - height[i]
+            );
+        }
+
+        // console.log(leftMaxes);
+        // console.log(height);
+        // console.log(rightMaxes);
 
         return result;
     }
 }
 
-// var solution = new Solution();
+var solution = new Solution();
 // console.log(solution.trap([0, 2, 0, 3, 1, 0, 1, 3, 2, 1]));
 // console.log(solution.trap([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]));
 // console.log(solution.trap([0, 2, 0]));
 // console.log(solution.trap([0, 2, 0, 3, 1, 0, 1, 3, 2, 1]));
 // console.log(solution.trap([4, 2, 3]));
 // console.log(solution.trap([4, 4, 4, 7, 1, 0]));
+// console.log(solution.trap([4, 2, 0, 3, 2, 5]));
 
 // Time-complexity: O(n)
 // Space-complexity: O(1)
