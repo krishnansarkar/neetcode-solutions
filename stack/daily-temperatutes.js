@@ -15,7 +15,7 @@
 // 1 <= temperatures.length <= 1000.
 // 1 <= temperatures[i] <= 100
 
-class Solution {
+class BruteForceSolution {
     /**
      * @param {number[]} temperatures
      * @return {number[]}
@@ -42,4 +42,35 @@ class Solution {
 // console.log(solution.dailyTemperatures([30, 38, 30, 36, 35, 40, 28]));
 
 // Time-complexity: O(n^2)
+// Space-complexity: O(n)
+
+class StackSolution {
+    /**
+     * @param {number[]} temperatures
+     * @return {number[]}
+     */
+    dailyTemperatures(temperatures) {
+        var result = new Array(temperatures.length).fill(0);
+        var stack = [];
+
+        for (let i = 0; i < temperatures.length; i++) {
+            const currentTemp = temperatures[i];
+            while (
+                stack.length > 0 &&
+                currentTemp > temperatures[stack[stack.length - 1]]
+            ) {
+                const startTempIndex = stack.pop();
+                result[startTempIndex] = i - startTempIndex;
+            }
+            stack.push([i]);
+        }
+
+        return result;
+    }
+}
+
+var solution = new StackSolution();
+console.log(solution.dailyTemperatures([30, 38, 30, 36, 35, 40, 28]));
+
+// Time-complexity: O(n)
 // Space-complexity: O(n)
